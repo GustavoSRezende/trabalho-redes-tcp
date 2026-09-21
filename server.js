@@ -23,7 +23,17 @@ const servidor = net.createServer((socket) => { //cria o servidor, socket e a co
             
             //entra no caso de if dependendo da rota pedida pelo navegador, se for a rota principal "/" ele envia a pagina principal, se for a rota "/sobre" ele envia a pagina sobre redes de computadores, se for qualquer outra rota ele envia a pagina de erro 404
             if (rota === '/') {
-                const html = "<html><body><h1>Pagina Principal</h1><p>Pagina principal do servidor TCP.</p></body></html>"; //define o corpo da resposta, que é o conteudo que será exibido no navegador
+                //define o corpo da resposta, que é o conteudo que será exibido no navegador
+                const html = ` 
+                    <html>
+                    <body>
+                        <h1>Pagina Principal</h1>
+                            <p>Pagina principal do servidor TCP.</p>
+                            <p><a href="/sobre">Clique aqui para ir a pagina Sobre</a></p>
+                            <p><a href="/unisinos">Clique aqui para ir a pagina da unisinos</a></p>
+                    </body>
+                    </html>
+            `; 
                 
                 socket.write("HTTP/1.1 200 OK\r\n"); //socket write para enviar a resposta HTTP para o navegador
                                                      //identifica o http e o status 200 da resposta 
@@ -41,6 +51,8 @@ const servidor = net.createServer((socket) => { //cria o servidor, socket e a co
                             <li><b>TCP:</b> Protocolo da Camada de Transporte que garante a entrega dos dados.</li>
                             <li><b>HTTP:</b> Protocolo da Camada de Aplicação que formata a comunicação Web.</li>
                         </ul>
+                        <br>
+                        <a href="/">Voltar para a Pagina Principal</a>
                     </body>
                     </html>
                 `;
@@ -51,7 +63,15 @@ const servidor = net.createServer((socket) => { //cria o servidor, socket e a co
             } 
             else {
                 //se não for nenhuma das anteriores, devolve o Erro 404
-                const html = "<html><body><h1>Erro 404</h1><p>Ops! Página não encontrada.</p></body></html>";
+                const html = ` 
+                    <html>
+                    <body>
+                        <h1>Erro 404</h1>
+                        <p>Ops! Página não encontrada.</p>
+                        <a href="/">Voltar para a Pagina Principal</a>
+                    </body>
+                    </html>
+                `;
                 
                 socket.write("HTTP/1.1 404 Not Found\r\n");
                 socket.write("Content-Type: text/html; charset=utf-8\r\n\r\n");
